@@ -136,7 +136,7 @@ export default function HomePage() {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => {}}
+                    onClick={() => {history.push("view/" + entry.id)}}
                   >
                     View Details
                   </Button>

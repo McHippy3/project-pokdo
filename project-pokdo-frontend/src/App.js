@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 
 import "./App.css";
 import CreatePage from "./components/CreatePage";
+import ViewPage from "./components/ViewPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Switch>
         <Route exact path="/" render={() => <HomePage />} />
         <Route exact path="/create"  render={() => <CreatePage />} />
+        <Route exact path="/view/:id"  render={() => <ViewPage />} />
       </Switch>
     </Router>
   );

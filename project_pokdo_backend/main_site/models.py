@@ -6,6 +6,7 @@ class Listing(models.Model):
     location = models.TextField(default="", blank=True)
     admissions = models.TextField(default="", blank=True)
     image = models.FileField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'listing'

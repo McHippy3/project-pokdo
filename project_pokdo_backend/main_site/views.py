@@ -5,10 +5,6 @@ from .serializers import ListingSerializer
 
 
 class ListingViewSet(ModelViewSet):
-    queryset = Listing.objects.all()
+    queryset = Listing.objects.all().order_by('-created_at')
     serializer_class = ListingSerializer
     parser_classes = (MultiPartParser, FormParser)
-
-    def perform_create(self, serializer):
-        if 'image' in self.request.data:
-            serializer.save(image=self.request.data.get('image'))

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
@@ -10,6 +12,10 @@ import Grid from "@material-ui/core/Grid";
 import HeaderBar from "./HeaderBar";
 
 const useStyles = makeStyles((theme) => ({
+  newSchoolButton: {
+    marginTop: "20px",
+    marginLeft: "10px"
+  },
   loader: {
     position: "relative",
     marginLeft: "50%",
@@ -37,12 +43,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "10px",
   },
   admissionsText: {
-    marginTop: "80px",
+    marginTop: "120px",
     backgroundColor: "rgb(45, 191, 18)",
     borderRadius: "15px",
     color: "#fff",
-    fontWeight: 6
-  }
+    fontWeight: 6,
+  },
 }));
 
 const apiURL = "http://localhost:8000/api";
@@ -51,6 +57,7 @@ export default function HomePage() {
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [listings, setListings] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     fetch(apiURL + "/listing/", {
@@ -77,66 +84,76 @@ export default function HomePage() {
       });
   }, []);
 
+  const truncateText = (text) => {
+    if (text.length > 200) {
+      return text.substring(0, 200) + "...";
+    }
+    return text;
+  };
+
   return loading ? (
     <CircularProgress className={classes.loader} />
   ) : (
     <>
-    <HeaderBar />
-    <div className={classes.centeredHorizontal}>
-      {listings.map((entry) => (
-        <Card className={classes.shopCard} key={entry.id}>
-          <Grid container direction="row" spacing={4}>
-            <Grid item xs={4}>
-              <img
-                src={
-                  entry.image
-                    ? entry.image
-                    : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png"
-                }
-                alt=""
-                className={classes.squareImage}
-              />
-            </Grid>
-            <Grid item xs={5}>
-              <div>
+      <HeaderBar />
+      <div className={classes.centeredHorizontal}>
+        <Button variant="contained" color="primary" className={classes.newSchoolButton} onClick={() => {history.push('create/')}}>
+          <AddIcon/>
+        </Button>
+        {listings.map((entry) => (
+          <Card className={classes.shopCard} key={entry.id}>
+            <Grid container direction="row" spacing={4}>
+              <Grid item xs={4}>
+                <img
+                  src={
+                    entry.image
+                      ? entry.image
+                      : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png"
+                  }
+                  alt=""
+                  className={classes.squareImage}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <div>
+                  <Typography
+                    gutterBottom
+                    style={{ color: "#052470" }}
+                    variant="h5"
+                  >
+                    {entry.schoolName}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {truncateText(entry.location)}
+                  </Typography>
+                  <Typography variant="body2" gutterBottom>
+                    {truncateText(entry.about)}
+                  </Typography>
+                </div>
+              </Grid>
+              <Grid item xs={3} justify="flex-end">
+                <div className={classes.rightAlignButton}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {}}
+                  >
+                    View Details
+                  </Button>
+                </div>
                 <Typography
+                  variant="body2"
+                  align="center"
+                  className={classes.admissionsText}
                   gutterBottom
-                  style={{ color: "#052470" }}
-                  variant="h5"
                 >
-                  {entry.schoolName}
+                  Enrolling Now
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  {entry.location}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {entry.about}
-                </Typography>
-              </div>
+              </Grid>
             </Grid>
-            <Grid item xs={3} justify="flex-end">
-              <div className={classes.rightAlignButton}>
-                <Button variant="contained" color="primary" onClick={() => {}}>
-                  View Details
-                </Button>
-              </div>
-              <div className={classes.rightAlignButton}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => {}}
-                >
-                  Edit
-                </Button>
-              </div>
-                <Typography variant="body2" align="center" className={classes.admissionsText} gutterBottom>
-                  {entry.admissions}
-                </Typography>
-            </Grid>
-          </Grid>
-        </Card>
-      ))}
-    </div>
+          </Card>
+        ))}
+      </div>
     </>
   );
 }

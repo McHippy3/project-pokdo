@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const apiURL = "http://localhost:8000/api";
+const apiURL = "206.189.203.185:8000/api";
 
 export default function HomePage() {
   const classes = useStyles();

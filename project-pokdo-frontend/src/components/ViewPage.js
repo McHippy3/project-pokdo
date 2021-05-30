@@ -76,7 +76,7 @@ export default function ViewPage(props) {
         className={classes.editButton}
         color="primary"
         onClick={() => {
-          history.push("edit/" + id);
+          history.push("/edit/" + id);
         }}
       >
         <EditIcon />

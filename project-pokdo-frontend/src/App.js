@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage";
 
 import "./App.css";
 import CreatePage from "./components/CreatePage";
+import EditPage from "./components/EditPage";
 import ViewPage from "./components/ViewPage";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/" render={() => <HomePage />} />
         <Route exact path="/create"  render={() => <CreatePage />} />
         <Route exact path="/view/:id"  render={() => <ViewPage />} />
+        <Route exact path="/edit/:id"  render={() => <EditPage />} />
       </Switch>
     </Router>
   );

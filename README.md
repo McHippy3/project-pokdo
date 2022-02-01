@@ -1,7 +1,5 @@
 # Project POKDO
 
-Live Link: http://206.189.203.185:3000/
-
 Technologies Used: ReactJS, NodeJS, Django, MySQL, Ubuntu
 
 Home Screen:
